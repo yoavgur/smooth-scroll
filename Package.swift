@@ -6,6 +6,9 @@ let package = Package(
     platforms: [
         .macOS(.v13)
     ],
+    dependencies: [
+        .package(url: "https://github.com/swiftlang/swift-testing.git", branch: "release/6.2"),
+    ],
     targets: [
         .executableTarget(
             name: "SmoothScroll",
@@ -17,6 +20,14 @@ let package = Package(
                 .linkedFramework("IOKit"),
                 .linkedFramework("SwiftUI"),
             ]
+        ),
+        .testTarget(
+            name: "SmoothScrollTests",
+            dependencies: [
+                "SmoothScroll",
+                .product(name: "Testing", package: "swift-testing"),
+            ],
+            path: "Tests/SmoothScrollTests"
         ),
     ]
 )

@@ -4,10 +4,13 @@ BUILD_DIR = .build/release
 INSTALL_DIR = /Applications
 LAUNCH_AGENT = ~/Library/LaunchAgents/com.smoothscroll.app.plist
 
-.PHONY: build bundle run clean install uninstall
+.PHONY: build test bundle run clean install uninstall
 
 build:
 	swift build -c release
+
+test:
+	swift test --disable-xctest --enable-swift-testing
 
 bundle: build
 	rm -rf $(BUNDLE)

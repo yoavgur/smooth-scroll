@@ -7,7 +7,6 @@ A lightweight macOS menu bar app that adds smooth scrolling to external mice. Bu
 - **Smooth scrolling** — transforms clicky mouse wheel steps into fluid, interpolated scroll with configurable curves (linear, ease-out, exponential)
 - **Per-device profiles** — automatically detects connected mice via IOHIDManager and lets you configure each one independently
 - **Minimum notch distance** — ensures each scroll notch produces a visible, consistent movement (great for high-resolution wheels like the MX Master 3S)
-- **Zoom with modifier + horizontal scroll** — hold a modifier key (e.g. Cmd) and use your horizontal scroll wheel to zoom in/out in any app, with configurable sensitivity
 - **Reverse scroll** — independently reverse vertical and/or horizontal scroll direction
 - **Menu bar UI** — all settings accessible from a clean SwiftUI popover in the menu bar
 - **Login item** — optionally starts at login via LaunchAgent
@@ -43,17 +42,6 @@ make uninstall
 4. Adjust speed, smoothness, curve, and other settings to your liking
 5. Grant Accessibility permission when prompted (required for scroll interception)
 
-### Zoom feature
-
-To enable zoom via the horizontal scroll wheel:
-
-1. Toggle **"Zoom with modifier + horizontal scroll"** on
-2. Choose your modifier (Cmd, Ctrl, Option, or Shift)
-3. Adjust **Zoom sensitivity** (lower = more sensitive)
-4. Hold the modifier and scroll the horizontal wheel to zoom in/out
-
-Zoom sends `Cmd+=` / `Cmd+-` to the app under your cursor, so it works in browsers, editors, and most apps.
-
 ## Build targets
 
 | Command | Description |
@@ -63,6 +51,7 @@ Zoom sends `Cmd+=` / `Cmd+-` to the app under your cursor, so it works in browse
 | `make run` | Build + bundle + launch |
 | `make install` | Build + bundle + copy to /Applications + create login item |
 | `make uninstall` | Remove from /Applications + remove login item |
+| `make test` | Run unit tests |
 | `make clean` | Remove build artifacts |
 
 ## How it works
@@ -72,7 +61,6 @@ Zoom sends `Cmd+=` / `Cmd+-` to the app under your cursor, so it works in browse
 3. Trackpad events (which have non-zero scroll phases) are passed through untouched
 4. Mouse wheel events are consumed and fed into **ScrollSmoother**, which applies the configured interpolation curve
 5. **ScrollPoster** emits smooth, continuous scroll events at ~120Hz via a `DispatchSourceTimer`
-6. For zoom, horizontal scroll delta is accumulated and translated into `Cmd+=` / `Cmd+-` keyboard shortcuts sent to the app under the cursor via `CGEvent.postToPid()`
 
 ## Credits
 
